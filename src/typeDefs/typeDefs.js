@@ -8,12 +8,19 @@ const typeDefs = gql`
   type Query {
     getClients: [Client]
     getNotes(entityId: Int!): [Note]
+    loginUser(userLogin: String, password: String): tokenres
   }
 
   type Mutation {
     createNote(input: NoteType!): Int
     updateNote(noteId: Int!, content: String!): Int
     deleteNote(noteId: Int!): Int
+    createUser(input: UserType!): Boolean
+  }
+
+  type tokenres {
+    id: Int
+    token: String
   }
 
   type Client {
@@ -65,6 +72,13 @@ const typeDefs = gql`
     focusId: Int
     content: String
     createdUserId: Int 
+  }
+
+  input UserType {
+    userLogin: String!
+    prefName: String!
+    password: String!
+    roleId: Int!
   }
 `;
 

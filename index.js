@@ -6,12 +6,19 @@ const typeDefs = require('./src/typeDefs');
 
 require('dotenv').config()
 
-
 const server = new ApolloServer({
     typeDefs,
     resolvers,
     // trace to check the performance --- Apollo Studio
-    tracing: true
+    tracing: true,
+    context: ({req}) => {
+
+        const token = req.headers.authorization || '';
+
+        return {
+            token
+        }
+    }
 });
 
 const port = process.env.DB_PORT_NUM || 8000;
